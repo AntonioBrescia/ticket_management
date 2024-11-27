@@ -7,5 +7,7 @@ import com.example.projectWork.entity.Utente;
 
 @Repository
 public interface UtenteRepository extends JpaRepository<Utente, Long> {
+    Utente findByUsernameAndPassword(String username, String password);
+
     Utente findByUsername(String username);
 }

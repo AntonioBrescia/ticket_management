@@ -18,10 +18,19 @@ public class UtenteService {
     private UtenteRepository utenteRepository;
 
     private final UtenteMapper utenteMapper = new UtenteMapper(); // Instanzia il mapper
-
-    // Metodo per ottenere un utente tramite username
     public UtenteDTO getUtenteByUsername(String username) {
         Utente utente = utenteRepository.findByUsername(username);
+        if (utente != null) {
+            return utenteMapper.utenteToUtenteDTO(utente); // Usa il mapper per la conversione
+        }
+        throw new RuntimeException("Utente non trovato");
+    }
+
+    // Metodo per ottenere un utente tramite username e pass
+
+    public UtenteDTO getUtenteByUsernameAndPassword(UtenteDTO utenteDTO) {
+
+        Utente utente = utenteRepository.findByUsernameAndPassword(utenteDTO.getUsername(),utenteDTO.getPassword());
         if (utente != null) {
             return utenteMapper.utenteToUtenteDTO(utente); // Usa il mapper per la conversione
         }

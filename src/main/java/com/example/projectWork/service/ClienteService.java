@@ -36,11 +36,10 @@ public class ClienteService {
     }
 
     // Aggiornamento dei dati di un cliente
-    public ClienteDTO updateCliente(String email, ClienteDTO clienteDTO) {
-        Cliente cliente = clienteRepository.findByEmail(email);
-        // .orElseThrow(() -> new RuntimeException("Cliente con email " + email + " non
-        // trovato"));
-
+    public ClienteDTO updateCliente(Integer id, ClienteDTO clienteDTO) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente non trovato"));
+        
         // Aggiorna i campi del cliente con i dati del DTO
         cliente.setNome(clienteDTO.getNome());
         cliente.setEmail(clienteDTO.getEmail());
@@ -48,10 +47,9 @@ public class ClienteService {
         cliente.setTelefono(clienteDTO.getTelefono());
         cliente.setPartitaIva(clienteDTO.getPartitaIva());
         cliente.setCodiceFiscale(clienteDTO.getCodiceFiscale());
-
-        // Salva e restituisci il cliente aggiornato
+        
         cliente = clienteRepository.save(cliente);
-        return clienteMapper.clienteToClienteDTO(cliente); // Restituisce il DTO aggiornato
+        return clienteMapper.clienteToClienteDTO(cliente);
     }
 
     // Eliminazione di un cliente
@@ -75,19 +73,6 @@ public class ClienteService {
         Cliente cliente = clienteMapper.clienteDTOToCliente(clienteDTO); // Converte il DTO in entità
         cliente = clienteRepository.save(cliente);
         return clienteMapper.clienteToClienteDTO(cliente); // Restituisce il DTO
-    }
-
-    // Metodo per aggiornare un Cliente
-    public ClienteDTO updateCliente(Integer id, ClienteDTO clienteDTO) {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente non trovato"));
-        cliente.setNome(clienteDTO.getNome());
-        cliente.setEmail(clienteDTO.getEmail());
-        cliente.setPartitaIva(clienteDTO.getPartitaIva());
-        cliente.setCodiceFiscale(clienteDTO.getCodiceFiscale());
-        cliente.setIndirizzo(clienteDTO.getIndirizzo());
-        cliente.setTelefono(clienteDTO.getTelefono());
-        cliente = clienteRepository.save(cliente);
-        return clienteMapper.clienteToClienteDTO(cliente); // Restituisce il DTO aggiornato
     }
 
     // Metodo per eliminare un Cliente

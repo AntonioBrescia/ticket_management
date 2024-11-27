@@ -43,10 +43,10 @@ public class ClienteController {
     }
 
     // Aggiornamento dei dati di un cliente
-    @PutMapping("/{email}")
-    public ResponseEntity<ClienteDTO> updateCliente(@PathVariable String email, @RequestBody ClienteDTO clienteDTO) {
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteDTO> updateCliente(@PathVariable Integer id, @RequestBody ClienteDTO clienteDTO) {
         try {
-            ClienteDTO updatedCliente = clienteService.updateCliente(email, clienteDTO);
+            ClienteDTO updatedCliente = clienteService.updateCliente(id, clienteDTO);
             return new ResponseEntity<>(updatedCliente, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);  // Cliente non trovato

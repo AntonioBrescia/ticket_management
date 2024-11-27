@@ -25,10 +25,20 @@ public class UtenteController {
     }
 
     // Recupero di tutti gli utenti
-    @GetMapping
+    @PostMapping("/all")
     public ResponseEntity<List<UtenteDTO>> getAllUtenti() {
         List<UtenteDTO> utenti = utenteService.getAllUtenti();
         return new ResponseEntity<>(utenti, HttpStatus.OK);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<UtenteDTO> getUtenteByUsernameAndPassword(@RequestBody UtenteDTO utenteDTO) {
+        try {
+            UtenteDTO utente = utenteService.getUtenteByUsernameAndPassword(utenteDTO);
+            return new ResponseEntity<>(utente, HttpStatus.OK);
+            
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Utente non trovato
+        }
     }
 
     // Recupero di un utente per username
